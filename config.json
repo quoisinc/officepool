@@ -1,7 +1,9 @@
 {
   "routes":
   [
-    { "path": "/", "callback": "application#index" }
+    { "path": "/", "callback": "application#index" },
+    { "path":"/user/create","method":"POST","callback":"users#create"},
+    { "path":"/user/read","method":"POST","callback":"users#login"}
   ],
   "filters":
   [
