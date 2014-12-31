@@ -140,8 +140,8 @@ var getUIColor = function (name) {
 
 /* Screenfull */
 
-document.getElementById('fullscreen-btn').addEventListener('click', function () {
+/*document.getElementById('fullscreen-btn').addEventListener('click', function () {
     if (screenfull.enabled) {
         screenfull.request();
     }
-});
+});*/
