@@ -1,17 +1,13 @@
-var myApp = angular.module('myApp', ['ui.router','ng-route']);
-
-myApp.config(function($stateProvider,$urlRouterProvider,$locationProvider){
-   $locationProvider.html5Mode(true);
- 	console.log($locationProvider);
-	$stateProvider.state('home',{
-		url : '#home',
-		templateUrl: '../partials/login.html'
-	}).
-	state('about',{
-		url : '/about',
-		templateUrl : 'partials/index.html'
-	});
-});
+"use strict";
+var myApp = angular.module('myApp', ['ui.router']);
+console.log('teset');
+myApp.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+	var login = { name: 'login',templateUrl: 'partials/login.html',url: '/login' };
+	console.log('asdfsdf');
+	$stateProvider.state(login);
+}]).run(['$state', function ($state) {
+   $state.transitionTo('home');
+}]);
 
 
 /************************************************************/
