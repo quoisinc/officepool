@@ -1,15 +1,19 @@
   <div class="center-content">
-      <form action="" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin" method="">
+      <form data-ng-submit="loginSubmit(user)" name="loginForm" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
             <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">Office Pool <span class="opacity-80">v1.0</span></h3>
             <div id="login-form" class="content-box bg-default">
                 <div class="content-box-wrapper pad20A">
-                    <img class="mrg25B center-margin radius-all-100 display-block" src="/images/image-resources/gravatar.jpg" alt="">
+                    <a class="btn btn-md bg-facebook tooltip-button mrg25B center-margin radius-all-100 display-block" title="" data-placement="bottom" href="#" data-original-title="Login with Facebook">
+                    <i class="glyph-icon icon-facebook"></i>
+                    </a>
+                    <!--<img class="mrg25B center-margin radius-all-100 display-block" src="/images/image-resources/gravatar.jpg" alt="">-->
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-envelope-o"></i>
                             </span>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                            <input type="email" name="username" class="form-control" id="exampleInputEmail1" placeholder="Enter email" data-ng-model="user.username">
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -17,7 +21,7 @@
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-unlock-alt"></i>
                             </span>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" data-ng-model="user.password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,31 +35,11 @@
                             </label>
                         </div>
                         <div class="text-right col-md-6">
-                            <a href="#" class="switch-button" switch-target="#login-forgot" switch-parent="#login-form" title="Recover password">Forgot your password?</a>
+                            <a  ui-sref="password-reset" class="switch-button" switch-target="#login-forgot" switch-parent="#login-form" title="Recover password">Forgot your password?</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div id="login-forgot" class="content-box bg-default hide">
-                <div class="content-box-wrapper pad20A">
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail2">Email address:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon addon-inside bg-gray">
-                                <i class="glyph-icon icon-envelope-o"></i>
-                            </span>
-                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
-                        </div>
-                    </div>
-                </div>
-                <div class="button-pane text-center">
-                    <button type="submit" class="btn btn-md btn-primary">Recover Password</button>
-                    <a href="#" class="btn btn-md btn-link switch-button" switch-target="#login-form" switch-parent="#login-forgot" title="Cancel">Cancel</a>
-                </div>
-            </div>
-
         </form>
 
     </div>

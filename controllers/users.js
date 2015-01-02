@@ -29,7 +29,7 @@ function login(req,res)
 		password : req.body.password
 	},function(data){
 		console.log(data);
-		if(data.success) return res.send(200);
+		if(data.success) return res.send(200,data);
 		return res.send(200,data);
 	});
 }
