@@ -31,7 +31,15 @@ var myApp = angular.module('officepoolApp', ['ui.router']).config(['$stateProvid
 			  console.log('$stateNotFound '+unfoundState.to+'  - fired when a state cannot be found by its name. :',fromState);
 			  console.log(unfoundState, fromState, fromParams);
 			});
-			 $state.transitionTo('login');
+	       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+			      $(window).load(function(){
+		            setTimeout(function() {
+		                $('#loading').fadeIn( 400, "linear" );
+		            }, 300);
+		        });
+			});
+
+			$state.transitionTo('login');
 
 		}]);
 
