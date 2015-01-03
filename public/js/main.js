@@ -1,5 +1,5 @@
 "use strict";
-var myApp = angular.module('officepoolApp', ['ui.router']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
 			$urlRouterProvider.otherwise('/');
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
 			var login = { name: 'login',templateUrl: '../partials/login.html',url: 'login' };

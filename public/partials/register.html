@@ -1,6 +1,6 @@
-<div class="center-content">
+<div class="center-content" data-ng-hide>
 
-            <form name="registerForm" data-ng-submit="registerSubmit(user)" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
+            <form name="registerForm" data-ng-submit="registerSubmit(user)" novalidate class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
                 <div class="content-box wow  modal-content" >
                     <h3 class="content-box-header content-box-header-alt bg-default">
                         <span class="icon-separator">
@@ -20,7 +20,8 @@
                             <span class="input-group-addon bg-blue">
                                     <i class="glyph-icon icon-user"></i>
                             </span>
-                            <input type="text" placeholder="First Name" data-ng-model="user.first_name" name="first_name" id="first_name" class="form-control">
+                            <input type="text" placeholder="First Name" data-ng-required="true" data-ng-model="user.first_name" name="first_name" id="first_name" class="form-control">
+                            <p data-ng-show="registerForm.first_name.$error.required && registerForm.first_name.$touched" class="alert-danger">First name is required!</p>
                                 
                             </div>
                         </div>
@@ -29,7 +30,8 @@
                             <span class="input-group-addon bg-blue">
                                     <i class="glyph-icon icon-user"></i>
                             </span>
-                            <input type="text" placeholder="Last Name" data-ng-model="user.last_name"  name="user.last_name" id="last_name" class="form-control">
+                            <input type="text" placeholder="Last Name" data-ng-model="user.last_name"  data-ng-required="true" name="last_name" id="last_name" class="form-control">
+                             <p data-ng-show="registerForm.last_name.$error.required && registerForm.last_name.$touched" class="alert-danger">Last name is required!</p>
                                 
                             </div>
                         </div>
@@ -38,32 +40,35 @@
                             <span class="input-group-addon bg-blue">
                                     <i class="glyph-icon icon-envelope-o"></i>
                             </span>
-                            <input type="email" placeholder="Enter email" data-ng-model="user.email" name="user.email" id="email" class="form-control">
-                                
+                            <input type="email" placeholder="Enter email" data-ng-model="user.email" data-ng-required="true" name="email" id="email" class="form-control">
+                             <p data-ng-show="registerForm.email.$error.required && registerForm.email.$touched" class="alert-danger">Your email is required!</p>
+                              <p data-ng-show="registerForm.email.$invalid && registerForm.email.$touched" class="alert-danger">Please enter a valid email!</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                <span class="input-group-addon bg-blue">
-                                    <i class="glyph-icon icon-unlock-alt"></i>
+                                    <i class="glyph-icon icon-lock"></i>
                                 </span>
-                                <input type="password" placeholder="Password" data-ng-model="user.password"  id="password" name="user.password" class="form-control">
+                                <input type="password" placeholder="Password" data-ng-model="user.password" data-ng-required="true"  id="password" name="password" class="form-control">
+                                  <p data-ng-show="registerForm.password.$error.required && registerForm.password.$touched" class="alert-danger">Password cannot be empty</p>
                              
                             </div>
                         </div>
                          <div class="form-group">
                             <div class="input-group">
                                <span class="input-group-addon bg-blue">
-                                    <i class="glyph-icon icon-unlock-alt"></i>
+                                    <i class="glyph-icon icon-lock"></i>
                                 </span>
-                                <input type="password" placeholder="Confirm Password" data-ng-model="user.confirm_password"  name="user.confirm_password" id="confirm_password" class="form-control">
+                                <input type="password" placeholder="Confirm Password" data-ng-model="user.confirm_password" data-ng-required="true"  data-match="user.password" name="confirm_password" id="confirm_password" class="form-control">
+                                 <p data-ng-show="registerForm.confirm_password.$error.match" class="alert-danger">Password  do not match!</p>
                                
                             </div>
                         </div>
                         <div class="form-group">
                             <a title="Recover password" ui-sref="forgot">Forgot Your Password?</a>
                         </div>
-                        <button class="btn btn-success btn-block">Submit</button>
+                        <button class="btn btn-success btn-block" data-ng-disabled="registerForm.$invalid">Submit</button>
                     </div>
                 </div>
             </form>

@@ -1,5 +1,5 @@
-  <div class="center-content">
-      <form data-ng-submit="loginSubmit(user)" name="loginForm" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
+  <div class="center-content" >
+      <form data-ng-submit="loginSubmit(user)" novalidate name="loginForm" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
             <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">Office Pool <span class="opacity-80">v1.0</span></h3>
             <div id="login-form" class="content-box bg-default">
                 <div class="content-box-wrapper pad20A">
@@ -12,8 +12,8 @@
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-envelope-o"></i>
                             </span>
-                            <input type="email" name="username" class="form-control" id="exampleInputEmail1" placeholder="Enter email" data-ng-model="user.username">
-
+                            <input type="email" name="username" class="form-control" required placeholder="Enter email" data-ng-model="user.username">
+                            <p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine" class="alert-danger">Please enter a valid email.</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -21,11 +21,11 @@
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-unlock-alt"></i>
                             </span>
-                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" data-ng-model="user.password">
+                            <input type="password" name="password" class="form-control" required placeholder="Password" data-ng-model="user.password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-primary">Login</button>
+                        <button type="submit" class="btn btn-block btn-primary"  ng-disabled="loginForm.$invalid">Login</button>
                     </div>
                      <div class="form-group">
                          <a  ui-sref="register" class="btn btn-md btn-info btn-block" switch-target="#login-forgot" switch-parent="#login-form" title="Register For A New Account">Sign Up</a>
