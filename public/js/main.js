@@ -3,8 +3,10 @@ var myApp = angular.module('officepoolApp', ['ui.router']).config(['$stateProvid
 			$urlRouterProvider.otherwise('/');
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
 			var login = { name: 'login',templateUrl: '../partials/login.html',url: 'login' };
+			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register' };
 			$stateProvider.state(forgotPassword);
 			$stateProvider.state(login);
+			$stateProvider.state(register);
 			
 		}]).run(['$state','$rootScope', function ($state,$rootScope) {
 			$rootScope
@@ -23,7 +25,8 @@ var myApp = angular.module('officepoolApp', ['ui.router']).config(['$stateProvid
 	        		console.log('State change error :' , error);
 	        	});
 	       $rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
-			  console.log('$stateChangeSuccess to '+toState.name+'- fired once the state transition is complete.');
+
+			  $('#loading').fadeOut( 400, "linear" );
 			
 			});
 	       $rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
@@ -32,11 +35,9 @@ var myApp = angular.module('officepoolApp', ['ui.router']).config(['$stateProvid
 			  console.log(unfoundState, fromState, fromParams);
 			});
 	       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-			      $(window).load(function(){
-		            setTimeout(function() {
-		                $('#loading').fadeIn( 400, "linear" );
-		            }, 300);
-		        });
+			  $('#loading').fadeIn( 400, "linear" );
+		          
+		        
 			});
 
 			$state.transitionTo('login');
@@ -53,6 +54,10 @@ myApp.factory('user', function ($http) {
       login: function (credentials) {
          return $http.post('/user/read', credentials);
       },
+
+      register: function(user){
+      	return $http.post('/user/create',user);
+      }
       
   };
 });
@@ -82,6 +87,15 @@ myApp.controller('MainController',['$scope','user','$state',function($scope,user
        				 	}
        				 });
        				}
+
+ $scope.registerSubmit = function(data){
+ 						 
+ 						 var results = user.register(data);
+ 						 results.then(data)
+ 						 {
+ 						 	console.log(data);
+ 						 }
+ 						}
 }]);
 
 

@@ -1,0 +1,70 @@
+<div class="center-content">
+
+            <form name="registerForm" data-ng-submit="registerSubmit(user)" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin">
+                <div class="content-box wow  modal-content" >
+                    <h3 class="content-box-header content-box-header-alt bg-default">
+                        <span class="icon-separator">
+                            <i class="glyph-icon icon-cog"></i>
+                        </span>
+                        <span class="header-wrapper">
+                            New Account
+                            <small>Already a member?</small>
+                        </span>
+                        <span class="header-buttons">
+                            <a title="Login" class="btn btn-sm btn-primary" ui-sref="login">Login</a>
+                        </span>
+                    </h3>
+                    <div class="content-box-wrapper">
+                       <div class="form-group">
+                            <div class="input-group">
+                            <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-user"></i>
+                            </span>
+                            <input type="text" placeholder="First Name" data-ng-model="user.first_name" name="first_name" id="first_name" class="form-control">
+                                
+                            </div>
+                        </div>
+                           <div class="form-group">
+                            <div class="input-group">
+                            <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-user"></i>
+                            </span>
+                            <input type="text" placeholder="Last Name" data-ng-model="user.last_name"  name="user.last_name" id="last_name" class="form-control">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                            <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-envelope-o"></i>
+                            </span>
+                            <input type="email" placeholder="Enter email" data-ng-model="user.email" name="user.email" id="email" class="form-control">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                               <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-unlock-alt"></i>
+                                </span>
+                                <input type="password" placeholder="Password" data-ng-model="user.password"  id="password" name="user.password" class="form-control">
+                             
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <div class="input-group">
+                               <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-unlock-alt"></i>
+                                </span>
+                                <input type="password" placeholder="Confirm Password" data-ng-model="user.confirm_password"  name="user.confirm_password" id="confirm_password" class="form-control">
+                               
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a title="Recover password" ui-sref="forgot">Forgot Your Password?</a>
+                        </div>
+                        <button class="btn btn-success btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>

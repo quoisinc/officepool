@@ -11,7 +11,7 @@ function create(req, res) {
 		password_confirmation : req.body.confirm_password
 	},function(data){
 		console.log(data);
-		if(data.success) return res.send(200);
+		if(data.success) return res.send(200,data);
 		return res.send(200,data)
 
 
