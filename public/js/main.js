@@ -72,18 +72,29 @@ myApp.factory('user', function ($http) {
 		/*Controller Logic Goes Here*/
 
 myApp.controller('MainController',['$scope','user','$state',function($scope,user,$state){
+ 
  $scope.loginSubmit = function(data) { 
        				 var results = user.login(data);
+       				 $scope.loginForm.submitted = true;
        				 results.then(function(data){
-       				 	if(data.success)
+       				 	console.log(data);
+       				 	var original = $scope.loginForm;
+       				 	if(data.data.success)
        				 	{
        				 		console.info('changing view');
-       				 		return $state.go('forgot_password');
+
+       				 		return $state.go('forgot');
        				 	}
        				 	else
        				 	{
-       				 		console.warn('error');
-       				 		return $state.go('forgot');
+       				 		//set our login form to invalid state
+       				 		/*$scope.loginForm = angular.copy(original);
+       				 		$scope.loginForm.$setPristine();*/
+       				 		//$scope.loginForm['username'].$setValidity('server',false);
+       				 		$scope.loginForm.username.$setValidity('serverValidation',false);
+       				 		$scope.loginForm.$setPristine();
+       				 		
+       				 		
        				 	}
        				 });
        				}
