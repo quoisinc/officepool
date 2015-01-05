@@ -1,12 +1,16 @@
 "use strict";
-var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).config(['$stateProvider','$urlRouterProvider','$httpProvider',function($stateProvider,$urlRouterProvider,$httpProvider){
 			$urlRouterProvider.otherwise('/');
+			$httpProvider.interceptors.push('ajaxLoader');
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
 			var login = { name: 'login',templateUrl: '../partials/login.html',url: 'login' };
 			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register' };
 			$stateProvider.state(forgotPassword);
 			$stateProvider.state(login);
 			$stateProvider.state(register);
+
+			//lets configure our httpProvider factory
+				
 			
 		}]).run(['$state','$rootScope', function ($state,$rootScope) {
 			$rootScope
@@ -26,7 +30,7 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).co
 	        	});
 	       $rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
 
-			  $('#loading').fadeOut( 400, "linear" );
+			  
 			
 			});
 	       $rootScope.$on('$stateNotFound',function(event, unfoundState, fromState, fromParams){
@@ -35,7 +39,7 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).co
 			  console.log(unfoundState, fromState, fromParams);
 			});
 	       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-			  $('#loading').fadeIn( 400, "linear" );
+			 
 		          
 		        
 			});
@@ -61,6 +65,25 @@ myApp.factory('user', function ($http) {
       
   };
 });
+
+myApp.factory('ajaxLoader', ['$log', function($log) {  
+    $log.debug('$log is here to show you that this is a regular factory with injection');
+
+    var myInterceptor = {
+    	request : function(config){
+    		$('#loading').fadeIn( 400, "linear" );
+    		return config;
+    	},
+    	response : function(response)
+    	{
+    		$('#loading').fadeOut( 400, "linear" );
+    		return response;
+    	}
+    };
+
+    return myInterceptor;
+}]);
+
 
 
 /**************************************************************/
