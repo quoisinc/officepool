@@ -5,10 +5,11 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).co
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
 			var login = { name: 'login',templateUrl: '../partials/login.html',url: 'login' };
 			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register' };
+			var dashboard = { name: 'dashboard',templateUrl: '../partials/dashboard.html',url: 'dashboard' };
 			$stateProvider.state(forgotPassword);
 			$stateProvider.state(login);
 			$stateProvider.state(register);
-
+			$stateProvider.state(dashboard);
 			//lets configure our httpProvider factory
 				
 			
@@ -67,7 +68,6 @@ myApp.factory('user', function ($http) {
 });
 
 myApp.factory('ajaxLoader', ['$log', function($log) {  
-    $log.debug('$log is here to show you that this is a regular factory with injection');
 
     var myInterceptor = {
     	request : function(config){
@@ -100,20 +100,17 @@ myApp.controller('MainController',['$scope','user','$state',function($scope,user
        				 var results = user.login(data);
        				 $scope.loginForm.submitted = true;
        				 results.then(function(data){
-       				 	console.log(data);
        				 	var original = $scope.loginForm;
        				 	if(data.data.success)
        				 	{
-       				 		console.info('changing view');
+       				 		
 
-       				 		return $state.go('forgot');
+       				 		return $state.go('dashboard');
        				 	}
        				 	else
        				 	{
        				 		//set our login form to invalid state
-       				 		/*$scope.loginForm = angular.copy(original);
-       				 		$scope.loginForm.$setPristine();*/
-       				 		//$scope.loginForm['username'].$setValidity('server',false);
+       				 		
        				 		$scope.loginForm.username.$setValidity('serverValidation',false);
        				 		$scope.loginForm.$setPristine();
        				 		

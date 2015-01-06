@@ -14,7 +14,7 @@
 }
 #header-logo .logo-content-big,
 .logo-content-small {
-    background: url('../../image-resources/logo-admin.png') left 50% no-repeat;
+    background: url('../../images/image-resources/logo-admin.png') left 50% no-repeat;
     text-indent: -999em;
     position: absolute;
     height: 34px;

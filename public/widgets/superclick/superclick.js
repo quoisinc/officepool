@@ -36,6 +36,7 @@
 				return $menu.find('li.' + o.pathClass).slice(0, o.pathLevels)
 					.addClass(o.activeClass + ' ' + c.bcClass)
 						.filter(function() {
+							console.log('nave clicked');
 							return ($(this).children('.sidebar-submenu').hide().show().length);
 						}).removeClass(o.pathClass);
 			},
