@@ -11,6 +11,7 @@ switch(process.env.NODE_ENV)
 // initialize app
 function start(app, express) {
 	app.use(express.favicon(__dirname + '/public/images/favicon.ico'));		//set favicon
+	app.use(express.cookieParser()); //use cookies
 }
 
 // release resources

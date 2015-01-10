@@ -2,14 +2,17 @@
 var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).config(['$stateProvider','$urlRouterProvider','$httpProvider',function($stateProvider,$urlRouterProvider,$httpProvider){
 			$urlRouterProvider.otherwise('/');
 			$httpProvider.interceptors.push('ajaxLoader');
+			$httpProvider.defaults.withCredentials = true; //store our session info
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
-			var login = { name: 'login',templateUrl: '../partials/login.html',url: 'login' };
+			var login = {name: 'login',templateUrl: '../partials/login.html',url: 'login' };
 			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register' };
 			var dashboard = { name: 'dashboard',templateUrl: '../partials/dashboard.html',url: 'dashboard' };
-			$stateProvider.state(forgotPassword);
-			$stateProvider.state(login);
-			$stateProvider.state(register);
-			$stateProvider.state(dashboard);
+			var index =  {abstract: true,template: "test",data: {access: true };
+			$stateProvider.state('public.forgot_password',forgotPassword);
+			$stateProvider.state('public',index);
+			$stateProvider.state('public.login',login);
+			$stateProvider.state('public.register',register);
+			$stateProvider.state('user.dashboard',dashboard);
 			//lets configure our httpProvider factory
 				
 			
@@ -45,7 +48,7 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).co
 		        
 			});
 
-			$state.transitionTo('login');
+			$state.transitionTo('public.login');
 
 		}]);
 
@@ -84,7 +87,7 @@ myApp.factory('ajaxLoader', ['$log', function($log) {
     return myInterceptor;
 }]);
 
-
+my.factory('authentication')
 
 /**************************************************************/
 
@@ -105,7 +108,7 @@ myApp.controller('MainController',['$scope','user','$state',function($scope,user
        				 	{
        				 		
 
-       				 		return $state.go('dashboard');
+       				 		return $state.go('user.dashboard');
        				 	}
        				 	else
        				 	{

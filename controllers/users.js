@@ -15,7 +15,7 @@ function create(req, res) {
 		return res.send(200,data)
 
 
-	})
+	},req,res)
 	
 	//res.render('index', { title: 'Welcome to Node.ACS!' });
 }
@@ -29,7 +29,11 @@ function login(req,res)
 		password : req.body.password
 	},function(data){
 		console.log(data);
-		if(data.success) return res.send(200,data);
+		if(data.success)
+		{
+			//res.cookie('session_id',data.meta.session_id, { maxAge: 900000, httpOnly: true });
+			return res.send(200,data);
+		} 
 		return res.send(200,data);
-	});
+	},req,res);
 }

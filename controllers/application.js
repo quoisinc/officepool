@@ -1,3 +1,8 @@
+var ACS = require('acs-node');
 function index(req, res) {
-	res.render('index', { title: 'Welcome to Node.ACS!' });
+	ACS.Users.showMe(function(e){
+		console.log('user ',e);
+		return res.render('index', { title: 'Welcome to Node.ACS!' });;
+	},req,res)
+	
 }
