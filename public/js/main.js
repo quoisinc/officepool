@@ -1,22 +1,20 @@
 "use strict";
-var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).config(['$stateProvider','$urlRouterProvider','$httpProvider',function($stateProvider,$urlRouterProvider,$httpProvider){
+var myApp = angular.module('officepoolApp', ['ui.router','validation.match','ngCookies']).config(['$stateProvider','$urlRouterProvider','$httpProvider',function($stateProvider,$urlRouterProvider,$httpProvider){
 			$urlRouterProvider.otherwise('/');
 			$httpProvider.interceptors.push('ajaxLoader');
 			$httpProvider.defaults.withCredentials = true; //store our session info
 			var forgotPassword = { name: 'forgot',templateUrl: '../partials/forgot_password.html',url: 'forgot' };
-			var login = {name: 'login',templateUrl: '../partials/login.html',url: 'login' };
-			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register' };
-			var dashboard = { name: 'dashboard',templateUrl: '../partials/dashboard.html',url: 'dashboard' };
-			var index =  {abstract: true,template: "test",data: {access: true };
-			$stateProvider.state('public.forgot_password',forgotPassword);
-			$stateProvider.state('public',index);
-			$stateProvider.state('public.login',login);
-			$stateProvider.state('public.register',register);
-			$stateProvider.state('user.dashboard',dashboard);
+			var login = {name: 'login',templateUrl: '../partials/login.html',url: 'login',authentication:false };
+			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register',authentication:false };
+			var dashboard = { name: 'dashboard',templateUrl: '../partials/dashboard.html',url: 'dashboard',authentication: true };
+			$stateProvider.state('forgot_password',forgotPassword);
+			$stateProvider.state('login',login);
+			$stateProvider.state('register',register);
+			$stateProvider.state('dashboard',dashboard);
 			//lets configure our httpProvider factory
 				
 			
-		}]).run(['$state','$rootScope', function ($state,$rootScope) {
+		}]).run(['$state','$rootScope','Auth', function ($state,$rootScope,Auth) {
 			$rootScope
 	        .$on('$viewContentLoaded',
 	            function(event, viewConfig){ 
@@ -43,13 +41,12 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match']).co
 			  console.log(unfoundState, fromState, fromParams);
 			});
 	       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-			 
+			 	if(toState.authentication && !Auth.isLoggedIn) $state.transitionTo('login');
 		          
 		        
 			});
 
-			$state.transitionTo('public.login');
-
+			Auth.isLoggedIn ? $state.go('dashboard') : $state.go('login');
 		}]);
 
 
@@ -87,7 +84,17 @@ myApp.factory('ajaxLoader', ['$log', function($log) {
     return myInterceptor;
 }]);
 
-my.factory('authentication')
+myApp.factory('Auth',['$http','$rootScope','$cookieStore',function($http,$rootScope,$cookieStore){
+	var currentUser = $cookieStore.get('user') || undefined;
+	return {
+		user : currentUser,
+		isLoggedIn: function(user)
+		{
+			if(user) return true;
+			return false;
+		}
+	};
+}]);
 
 /**************************************************************/
 
@@ -108,7 +115,7 @@ myApp.controller('MainController',['$scope','user','$state',function($scope,user
        				 	{
        				 		
 
-       				 		return $state.go('user.dashboard');
+       				 		return $state.go('dashboard');
        				 	}
        				 	else
        				 	{
