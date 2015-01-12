@@ -31,9 +31,22 @@ function login(req,res)
 		console.log(data);
 		if(data.success)
 		{
-			
+			res.cookie('user',JSON.stringify(data.users[0]));
 			return res.send(200,data);
 		} 
-		return res.send(200,data);
+		return res.send(data.meta.code,data);
+	},req,res);
+}
+
+function logout(req,res)
+{
+	ACS.Users.logout(function(e){
+		if(e.success) 
+		{
+			console.log('logout success! ',e);
+			res.clearCookie('user');
+			return res.send(200);
+		}
+		
 	},req,res);
 }

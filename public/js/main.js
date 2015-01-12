@@ -7,10 +7,12 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match','ngC
 			var login = {name: 'login',templateUrl: '../partials/login.html',url: 'login',authentication:false };
 			var register = { name: 'register',templateUrl: '../partials/register.html',url: 'register',authentication:false };
 			var dashboard = { name: 'dashboard',templateUrl: '../partials/dashboard.html',url: 'dashboard',authentication: true };
+			var logout = {name: 'logout',url:'logout',authentication: false,template:''}
 			$stateProvider.state('forgot_password',forgotPassword);
 			$stateProvider.state('login',login);
 			$stateProvider.state('register',register);
 			$stateProvider.state('dashboard',dashboard);
+			$stateProvider.state('logout',logout);
 			//lets configure our httpProvider factory
 				
 			
@@ -41,12 +43,12 @@ var myApp = angular.module('officepoolApp', ['ui.router','validation.match','ngC
 			  console.log(unfoundState, fromState, fromParams);
 			});
 	       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-			 	if(toState.authentication && !Auth.isLoggedIn) $state.transitionTo('login');
+			 	if(toState.authentication && !Auth.isLoggedIn()) $state.go('login');
 		          
 		        
 			});
 
-			Auth.isLoggedIn ? $state.go('dashboard') : $state.go('login');
+			Auth.isLoggedIn() ? $state.go('dashboard') : $state.go('login');
 		}]);
 
 
@@ -62,6 +64,10 @@ myApp.factory('user', function ($http) {
 
       register: function(user){
       	return $http.post('/user/create',user);
+      },
+      logout: function(user)
+      {
+      	return $http.get('/user/logout');
       }
       
   };
@@ -84,16 +90,17 @@ myApp.factory('ajaxLoader', ['$log', function($log) {
     return myInterceptor;
 }]);
 
-myApp.factory('Auth',['$http','$rootScope','$cookieStore',function($http,$rootScope,$cookieStore){
-	var currentUser = $cookieStore.get('user') || undefined;
-	return {
-		user : currentUser,
-		isLoggedIn: function(user)
+myApp.factory('Auth',['$http','$rootScope','$cookieStore','$cookies',function($http,$rootScope,$cookieStore,$cookies){
+	var currentUser;
+	if($cookies.user) currentUser = $cookieStore.get('user');
+	var Auth = {
+		isLoggedIn: function()
 		{
-			if(user) return true;
+			if(currentUser) return true;
 			return false;
 		}
-	};
+	}
+	return Auth;
 }]);
 
 /**************************************************************/
@@ -137,6 +144,7 @@ myApp.controller('MainController',['$scope','user','$state',function($scope,user
  						 	console.log(data);
  						 }
  						}
+
 }]);
 
 

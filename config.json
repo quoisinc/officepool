@@ -3,7 +3,8 @@
   [
     { "path": "/", "callback": "application#index" },
     { "path":"/user/create","method":"POST","callback":"users#create"},
-    { "path":"/user/read","method":"POST","callback":"users#login"}
+    { "path":"/user/read","method":"POST","callback":"users#login"},
+    { "path": "/user/logout","method":"GET","callback":"users#logout"}
   ],
   "filters":
   [
